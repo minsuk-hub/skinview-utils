@@ -130,48 +130,48 @@ export function loadSkinToCanvas(canvas: TextureCanvas, image: TextureSource): v
 	}
 }
 
-function computeCapeScale(image: TextureSource): number {
-	if (image.width === 2 * image.height) {
-		// 64x32
-		return image.width / 64;
-	} else if (image.width * 17 === image.height * 22) {
-		// 22x17
-		return image.width / 22;
-	} else if (image.width * 11 === image.height * 23) {
-		// 46x22
-		return image.width / 46;
-	} else {
-		throw new Error(`Bad cape size: ${image.width}x${image.height}`);
-	}
-}
+// function computeCapeScale(image: TextureSource): number {
+// 	if (image.width === 2 * image.height) {
+// 		// 64x32
+// 		return image.width / 64;
+// 	} else if (image.width * 17 === image.height * 22) {
+// 		// 22x17
+// 		return image.width / 22;
+// 	} else if (image.width * 11 === image.height * 23) {
+// 		// 46x22
+// 		return image.width / 46;
+// 	} else {
+// 		throw new Error(`Bad cape size: ${image.width}x${image.height}`);
+// 	}
+// }
 
-export function loadCapeToCanvas(canvas: TextureCanvas, image: TextureSource): void {
-	const scale = computeCapeScale(image);
-	canvas.width = 64 * scale;
-	canvas.height = 32 * scale;
+// export function loadCapeToCanvas(canvas: TextureCanvas, image: TextureSource): void {
+// 	const scale = computeCapeScale(image);
+// 	canvas.width = 64 * scale;
+// 	canvas.height = 32 * scale;
 
-	const context = canvas.getContext("2d", { willReadFrequently: true }) as CanvasContext;
-	context.clearRect(0, 0, canvas.width, canvas.height);
-	context.drawImage(image, 0, 0, image.width, image.height);
-}
+// 	const context = canvas.getContext("2d", { willReadFrequently: true }) as CanvasContext;
+// 	context.clearRect(0, 0, canvas.width, canvas.height);
+// 	context.drawImage(image, 0, 0, image.width, image.height);
+// }
 
-function isAreaBlack(context: CanvasImageData, x0: number, y0: number, w: number, h: number): boolean {
-	const imgData = context.getImageData(x0, y0, w, h);
-	for (let x = 0; x < w; x++) {
-		for (let y = 0; y < h; y++) {
-			const offset = (x + y * w) * 4;
-			if (!(
-				imgData.data[offset + 0] === 0 &&
-				imgData.data[offset + 1] === 0 &&
-				imgData.data[offset + 2] === 0 &&
-				imgData.data[offset + 3] === 0xff
-			)) {
-				return false;
-			}
-		}
-	}
-	return true;
-}
+// function isAreaBlack(context: CanvasImageData, x0: number, y0: number, w: number, h: number): boolean {
+// 	const imgData = context.getImageData(x0, y0, w, h);
+// 	for (let x = 0; x < w; x++) {
+// 		for (let y = 0; y < h; y++) {
+// 			const offset = (x + y * w) * 4;
+// 			if (!(
+// 				imgData.data[offset + 0] === 0 &&
+// 				imgData.data[offset + 1] === 0 &&
+// 				imgData.data[offset + 2] === 0 &&
+// 				imgData.data[offset + 3] === 0xff
+// 			)) {
+// 				return false;
+// 			}
+// 		}
+// 	}
+// 	return true;
+// }
 
 function isAreaWhite(context: CanvasImageData, x0: number, y0: number, w: number, h: number): boolean {
 	const imgData = context.getImageData(x0, y0, w, h);
@@ -262,35 +262,35 @@ export function inferModelType(canvas: TextureCanvas): ModelType {
 	return isSlim ? "slim" : "default";
 }
 
-function computeEarsScale(image: TextureSource): number {
-	if (image.width === image.height * 2 && image.height % 7 === 0) {
-		return image.height / 7;
-	} else {
-		throw new Error(`Bad ears size: ${image.width}x${image.height}`);
-	}
-}
+// function computeEarsScale(image: TextureSource): number {
+// 	if (image.width === image.height * 2 && image.height % 7 === 0) {
+// 		return image.height / 7;
+// 	} else {
+// 		throw new Error(`Bad ears size: ${image.width}x${image.height}`);
+// 	}
+// }
 
-export function loadEarsToCanvas(canvas: TextureCanvas, image: TextureSource): void {
-	const scale = computeEarsScale(image);
-	canvas.width = 14 * scale;
-	canvas.height = 7 * scale;
+// export function loadEarsToCanvas(canvas: TextureCanvas, image: TextureSource): void {
+// 	const scale = computeEarsScale(image);
+// 	canvas.width = 14 * scale;
+// 	canvas.height = 7 * scale;
 
-	const context = canvas.getContext("2d", { willReadFrequently: true }) as CanvasContext;
-	context.clearRect(0, 0, canvas.width, canvas.height);
-	context.drawImage(image, 0, 0, image.width, image.height);
-}
+// 	const context = canvas.getContext("2d", { willReadFrequently: true }) as CanvasContext;
+// 	context.clearRect(0, 0, canvas.width, canvas.height);
+// 	context.drawImage(image, 0, 0, image.width, image.height);
+// }
 
-export function loadEarsToCanvasFromSkin(canvas: TextureCanvas, image: TextureSource): void {
-	if (image.width !== image.height && image.width !== 2 * image.height) {
-		throw new Error(`Bad skin size: ${image.width}x${image.height}`);
-	}
+// export function loadEarsToCanvasFromSkin(canvas: TextureCanvas, image: TextureSource): void {
+// 	if (image.width !== image.height && image.width !== 2 * image.height) {
+// 		throw new Error(`Bad skin size: ${image.width}x${image.height}`);
+// 	}
 
-	const scale = computeSkinScale(image.width);
-	const w = 14 * scale;
-	const h = 7 * scale;
-	canvas.width = w;
-	canvas.height = h;
-	const context = canvas.getContext("2d", { willReadFrequently: true }) as CanvasContext;
-	context.clearRect(0, 0, w, h);
-	context.drawImage(image, 24 * scale, 0, w, h, 0, 0, w, h);
-}
+// 	const scale = computeSkinScale(image.width);
+// 	const w = 14 * scale;
+// 	const h = 7 * scale;
+// 	canvas.width = w;
+// 	canvas.height = h;
+// 	const context = canvas.getContext("2d", { willReadFrequently: true }) as CanvasContext;
+// 	context.clearRect(0, 0, w, h);
+// 	context.drawImage(image, 24 * scale, 0, w, h, 0, 0, w, h);
+// }
