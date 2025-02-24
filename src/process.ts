@@ -155,23 +155,23 @@ export function loadSkinToCanvas(canvas: TextureCanvas, image: TextureSource): v
 // 	context.drawImage(image, 0, 0, image.width, image.height);
 // }
 
-// function isAreaBlack(context: CanvasImageData, x0: number, y0: number, w: number, h: number): boolean {
-// 	const imgData = context.getImageData(x0, y0, w, h);
-// 	for (let x = 0; x < w; x++) {
-// 		for (let y = 0; y < h; y++) {
-// 			const offset = (x + y * w) * 4;
-// 			if (!(
-// 				imgData.data[offset + 0] === 0 &&
-// 				imgData.data[offset + 1] === 0 &&
-// 				imgData.data[offset + 2] === 0 &&
-// 				imgData.data[offset + 3] === 0xff
-// 			)) {
-// 				return false;
-// 			}
-// 		}
-// 	}
-// 	return true;
-// }
+function isAreaBlack(context: CanvasImageData, x0: number, y0: number, w: number, h: number): boolean {
+	const imgData = context.getImageData(x0, y0, w, h);
+	for (let x = 0; x < w; x++) {
+		for (let y = 0; y < h; y++) {
+			const offset = (x + y * w) * 4;
+			if (!(
+				imgData.data[offset + 0] === 0 &&
+				imgData.data[offset + 1] === 0 &&
+				imgData.data[offset + 2] === 0 &&
+				imgData.data[offset + 3] === 0xff
+			)) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
 
 function isAreaWhite(context: CanvasImageData, x0: number, y0: number, w: number, h: number): boolean {
 	const imgData = context.getImageData(x0, y0, w, h);
